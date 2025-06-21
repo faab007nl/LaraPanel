@@ -2,7 +2,7 @@
 
 namespace App\Managers\Installer;
 
-class InstalledManager
+class SetupManager
 {
 
     private string $installedFilePath;

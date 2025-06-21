@@ -7,10 +7,12 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationBuilder;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -30,17 +32,17 @@ class SitesPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Cyan,
             ])
+            ->topNavigation() // Hides side nav
+            ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
+                return $builder->items([]);
+            }) // Removes all nav items
             ->discoverResources(in: app_path('Filament/Sites/Resources'), for: 'App\\Filament\\Sites\\Resources')
             ->discoverPages(in: app_path('Filament/Sites/Pages'), for: 'App\\Filament\\Sites\\Pages')
             ->pages([
-                Pages\Dashboard::class,
-            ])
-            ->discoverWidgets(in: app_path('Filament/Sites/Widgets'), for: 'App\\Filament\\Sites\\Widgets')
-            ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                //
             ])
             ->middleware([
+                PanelRequiresInstallRedirectMiddleware::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
@@ -50,10 +52,10 @@ class SitesPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                PanelRequiresInstallRedirectMiddleware::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->brandLogo(fn () => view('filament.brand-logos.sites'));
     }
 }

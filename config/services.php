@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'ssh' => [
+        'host' => env('SSH_HOST', 'localhost'),
+        'port' => env('SSH_PORT', 22),
+        'username' => env('SSH_USERNAME', 'larapanel'),
+        'password' => env('SSH_PASSWORD', 'larapanel'),
+    ]
+
 ];

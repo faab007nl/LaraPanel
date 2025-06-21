@@ -15,11 +15,4 @@ class DatabaseInstallationPage extends Page
     protected static ?string $navigationIcon = 'heroicon-o-table-cells';
     protected static ?string $title = 'Database Installation';
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            $this->getNextStepAction(PostInstallPage::getRoutePath(), 'Next')
-        ];
-    }
-
 }

@@ -43,6 +43,7 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
+                PanelRequiresInstallRedirectMiddleware::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
@@ -52,11 +53,11 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                PanelRequiresInstallRedirectMiddleware::class
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->brandLogo(fn () => view('filament.brand-logos.admin'));
     }
 
 }

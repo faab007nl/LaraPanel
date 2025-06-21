@@ -11,15 +11,7 @@ class WelcomePage extends Page
 
     protected static string $view = 'filament.installer.pages.welcome-page';
 
-
     protected static ?string $navigationIcon = 'heroicon-o-hand-raised';
     protected static ?string $title = 'Welcome';
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            $this->getNextStepAction(SystemRequirementsPage::getRoutePath(), 'Next')
-        ];
-    }
 
 }

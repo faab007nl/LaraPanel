@@ -2,17 +2,31 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRole;
+use Barryvdh\Debugbar\Facades\Debugbar;
+use Carbon\Carbon;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasName;
 use Filament\Panel;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements FilamentUser
+/**
+ * @property int $id
+ * @property string $username
+ * @property string $firstname
+ * @property string $lastname
+ * @property string $email
+ * @property string $password
+ * @property UserRole $role
+ * @property string $allowed_sites
+ * @property Carbon $email_verified_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ */
+class User extends Authenticatable implements FilamentUser, HasName
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +34,7 @@ class User extends Authenticatable implements FilamentUser
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
     ];
@@ -45,6 +59,7 @@ class User extends Authenticatable implements FilamentUser
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => UserRole::class,
         ];
     }
 
@@ -52,4 +67,26 @@ class User extends Authenticatable implements FilamentUser
     {
         return true;
     }
+
+    public function getFilamentName(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+
+    public function isAdmin(): bool
+    {
+        return $this->role === UserRole::Admin;
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role === UserRole::User;
+    }
+
+    public function isSiteManager(): bool
+    {
+        return $this->role === UserRole::SiteManager;
+    }
+
 }

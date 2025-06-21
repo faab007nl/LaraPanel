@@ -6,7 +6,6 @@ use App\Filament\Installer\Pages\ApplicationConfigurationPage;
 use App\Filament\Installer\Pages\DatabaseConfigurationPage;
 use App\Filament\Installer\Pages\DatabaseInstallationPage;
 use App\Filament\Installer\Pages\LicenseAgreementPage;
-use App\Filament\Installer\Pages\PostInstallPage;
 use App\Filament\Installer\Pages\SuccessPage;
 use App\Filament\Installer\Pages\SystemRequirementsPage;
 use App\Filament\Installer\Pages\WelcomePage;
@@ -42,9 +41,8 @@ class InstallerPanelProvider extends PanelProvider
                 SystemRequirementsPage::class,
                 LicenseAgreementPage::class,
                 DatabaseConfigurationPage::class,
-                ApplicationConfigurationPage::class,
                 DatabaseInstallationPage::class,
-                PostInstallPage::class,
+                ApplicationConfigurationPage::class,
                 SuccessPage::class
             ])
             ->navigationItems([
@@ -54,6 +52,7 @@ class InstallerPanelProvider extends PanelProvider
                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.pages.dashboard')),
             ])
             ->middleware([
+                PanelInstalledRedirectMiddleware::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
@@ -63,8 +62,8 @@ class InstallerPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                PanelInstalledRedirectMiddleware::class,
             ])
+            ->brandLogo(fn () => view('filament.brand-logos.installer'))
             ->renderHook('panels::head.start',
                 fn(): string => Vite::useHotFile('hot')
                     ->withEntryPoints(['resources/css/filament/install.css'])->toHtml());

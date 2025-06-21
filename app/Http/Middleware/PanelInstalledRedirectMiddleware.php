@@ -11,9 +11,9 @@ class PanelInstalledRedirectMiddleware
 
     public function handle(Request $request, Closure $next): Response
     {
-        $installedManager = app('installed.manager');
+        $setupManager = app('manager.setup');
 
-        if ($installedManager->isInstalled()) {
+        if ($setupManager->isInstalled()) {
             return redirect()->to("/");
         }
 

@@ -1,1 +1,10 @@
 @import 'bulma/css/bulma.min.css';
+
+.database-form{
+    max-width: 400px;
+    margin: 0 auto;
+}
+.filament-form .grid:not(.fi-fo-wizard-header){
+    display: flex!important;
+    flex-direction: column;
+}

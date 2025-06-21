@@ -3,8 +3,8 @@
 namespace App\Filament\Installer\Pages;
 
 use App\Filament\Installer\BaseInstallerStepPage;
-use Filament\Actions\Action;
 use Filament\Pages\Page;
+use Livewire\Attributes\On;
 
 class SuccessPage extends Page
 {
@@ -14,21 +14,15 @@ class SuccessPage extends Page
 
 
     protected static ?string $navigationIcon = 'heroicon-o-check-badge';
-    protected static ?string $title = 'Setup Complete';
+    protected static ?string $title = 'Setup Completed';
 
-    protected function getHeaderActions(): array
+    #[On('nextStep')]
+    public function onNextStepButtonClicked(): void
     {
-        return [
-            Action::make('Complete Setup')
-                ->action(function (): void {
-                    $installedManager = app('installed.manager');
-                    $installedManager->markAsInstalled();
+        $setupManager = app('manager.setup');
+        $setupManager->markAsInstalled();
 
-                    $this->redirect("/");
-                })
-                ->icon('heroicon-o-arrow-right')
-                ->color('primary')
-        ];
+        $this->redirect('/');
     }
 
 }

@@ -15,11 +15,4 @@ class LicenseAgreementPage extends Page
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $title = 'License Agreement';
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            $this->getNextStepAction(DatabaseConfigurationPage::getRoutePath(), 'Next')
-        ];
-    }
-
 }

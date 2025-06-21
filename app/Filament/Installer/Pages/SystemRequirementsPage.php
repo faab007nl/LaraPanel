@@ -15,11 +15,4 @@ class SystemRequirementsPage extends Page
     protected static ?string $navigationIcon = 'heroicon-o-cpu-chip';
     protected static ?string $title = 'System Requirements';
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            $this->getNextStepAction(LicenseAgreementPage::getRoutePath(), 'Next')
-        ];
-    }
-
 }
