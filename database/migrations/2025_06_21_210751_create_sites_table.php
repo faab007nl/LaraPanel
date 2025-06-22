@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('domain')->unique();
             $table->enum('type', SiteType::getTypes());
             $table->string('root_dir')->nullable();
-            $table->string('group')->nullable();
+            $table->string('group')->nullable(); // TODO: Make relationship
             $table->json('tags')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

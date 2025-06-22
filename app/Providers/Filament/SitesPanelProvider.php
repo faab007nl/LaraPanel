@@ -19,10 +19,13 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class SitesPanelProvider extends PanelProvider
 {
+
+
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -56,6 +59,16 @@ class SitesPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->brandLogo(fn () => view('filament.brand-logos.sites'));
+            ->brandLogo(fn () => view('filament.brand-logos.sites'))
+            ->renderHook('panels::head.start',
+                fn(): string => Vite::useHotFile('hot')
+                    ->withEntryPoints(['resources/css/filament/sites.css'])
+                    ->toHtml());
     }
+
+    public static function getUrl(): string
+    {
+        return config('app.url') . '/sites';
+    }
+
 }

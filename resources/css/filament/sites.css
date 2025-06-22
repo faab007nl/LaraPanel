@@ -1,0 +1,68 @@
+/* Main wrapper for the grid layout */
+.type-select-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Styles for the clickable label wrapper that contains the option visual */
+.type-select-option-label-wrapper {
+    display: block;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Styles for the inner div representing each option */
+.type-select-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 4rem 0.5rem;
+    border: 2px solid #ccc;
+    border-radius: 0.5rem;
+    height: 100%;
+    justify-content: center;
+}
+
+/* Hover state for the option */
+.type-select-option-label-wrapper:hover .type-select-option {
+    border-color: #05a3be;
+}
+/* Focus state for the option (applies to the label wrapper) */
+.type-select-option-label-wrapper input:checked ~ .type-select-option{
+    border-color: #05a3be;
+    background: rgba(27, 110, 248, 0.05);
+}
+
+/* Selected state for the option (applies to the label wrapper) */
+.type-select-option-selected .type-select-option {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Styles for the icon container */
+.type-select-option-icon {
+    width: 100px;
+    height: 100px;
+}
+
+.type-select-option-icon svg {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+}
+
+/* Color change for icon when option is selected */
+.type-select-option-selected .type-select-option-icon svg {
+    color: #fff;
+}
+
+/* Styles for the option text/label */
+.type-select-option-text {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: #fff;
+}

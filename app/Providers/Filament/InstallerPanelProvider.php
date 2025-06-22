@@ -66,7 +66,8 @@ class InstallerPanelProvider extends PanelProvider
             ->brandLogo(fn () => view('filament.brand-logos.installer'))
             ->renderHook('panels::head.start',
                 fn(): string => Vite::useHotFile('hot')
-                    ->withEntryPoints(['resources/css/filament/install.css'])->toHtml());
+                    ->withEntryPoints(['resources/css/filament/install.css'])
+                    ->toHtml());
     }
 
     public static function getUrl(): string
